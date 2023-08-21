@@ -28,7 +28,6 @@ public class LoginService {
 
             if (savedPassword.equals(password)){
                 String response = otpService.generateOTP();
-                System.out.println(" OTP GENERATED " + response);
                 return "valid login";}
             else{ return "invalid password";}
         }
