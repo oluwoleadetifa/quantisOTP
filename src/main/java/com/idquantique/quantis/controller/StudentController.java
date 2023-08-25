@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -38,6 +39,7 @@ public class StudentController {
 
     @PostMapping
     public void registerNewStudent(@RequestBody Student student) {
+        System.out.println("controller " + student);
         studentService.addNewStudent(student);
     }
 
@@ -64,11 +66,16 @@ public class StudentController {
         ResponseData responseData = new ResponseData();
 
         //initialize response
-        String response = loginService.login(student.getEmail(), student.getPassword());
+        HashMap<String, String> response = loginService.login(student.getEmail(), student.getPassword());
 
         //get http status
         HttpStatus httpStatus = HttpStatus.OK;
-        responseData.setMessage(response);
+
+        System.out.println(response.get("otp"));
+
+        // set response body by params
+        responseData.setMessage(response.get("message"));
+        responseData.setOtp(response.get("otp"));
         responseData.setStatus(String.valueOf(httpStatus));
 
         return new ResponseEntity<>(responseData, httpStatus);

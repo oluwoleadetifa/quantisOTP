@@ -1,5 +1,7 @@
 package com.idquantique.quantis.student;
 
+import com.idquantique.quantis.tools.HashTool;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
@@ -71,7 +73,15 @@ public class Student {
         return Period.between(dob, LocalDate.now()).getYears();
     }
 
-    public String getPassword() { return password; }
+    public String getPassword() {
+        String hashedPassword = HashTool.hashString(password);
+        return hashedPassword; }
+
+    public void setPassword(String password) {
+
+        String hashedPassword = HashTool.hashString(password);
+        this.password = hashedPassword;
+    }
 
     @Override
     public String toString() {
@@ -80,6 +90,7 @@ public class Student {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", dob=" + dob +
+                ", password='" + password + '\'' +
                 ", age=" + age +
                 '}';
     }

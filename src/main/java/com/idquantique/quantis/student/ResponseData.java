@@ -27,7 +27,7 @@ public class ResponseData {
     }
 
     public void setOtp(String otp){
-        this.status = status;
+        this.otp = otp;
     }
 // Constructors, getters, setters
 }
