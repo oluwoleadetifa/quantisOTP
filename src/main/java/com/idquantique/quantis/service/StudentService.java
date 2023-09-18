@@ -30,7 +30,6 @@ public class StudentService {
         if (studentOptional.isPresent()) {
             throw new IllegalStateException("email taken");
         }
-        System.out.println("Add NEW STUDENT!! "+ student);
         studentRepository.save(student);
     }
 
@@ -62,8 +61,5 @@ public class StudentService {
         }
         studentRepository.save(student);
 
-    }
-
-    public void loginStudent(String name, String password) {
     }
 }

@@ -3,6 +3,7 @@ package com.idquantique.quantis.controller;
 import com.idquantique.quantis.QuantisException;
 import com.idquantique.quantis.service.LoginService;
 import com.idquantique.quantis.service.OTPService;
+import com.idquantique.quantis.student.OtpResetTask;
 import com.idquantique.quantis.student.ResponseData;
 import com.idquantique.quantis.student.Student;
 import com.idquantique.quantis.service.StudentService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
 
 @RestController
 @RequestMapping(path = "api/v1/student")
@@ -39,7 +41,6 @@ public class StudentController {
 
     @PostMapping
     public void registerNewStudent(@RequestBody Student student) {
-        System.out.println("controller " + student);
         studentService.addNewStudent(student);
     }
 
@@ -71,11 +72,10 @@ public class StudentController {
         //get http status
         HttpStatus httpStatus = HttpStatus.OK;
 
-        System.out.println(response.get("otp"));
-
         // set response body by params
         responseData.setMessage(response.get("message"));
         responseData.setOtp(response.get("otp"));
+        student.setOtp(response.get("otp"));
         responseData.setStatus(String.valueOf(httpStatus));
 
         return new ResponseEntity<>(responseData, httpStatus);
@@ -86,6 +86,8 @@ public class StudentController {
         loginService.signup(student);
 
     }
+
+
 
 
 }

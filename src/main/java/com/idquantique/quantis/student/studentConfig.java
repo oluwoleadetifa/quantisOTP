@@ -20,14 +20,16 @@ public class studentConfig {
                     "Mariam",
                     "mariam.jude@gmail.com",
                     LocalDate.of(2000, JANUARY, 5),
-                    "shidibande"
+                    "shidibande",
+                    null
 
             );
             Student alex = new Student(
                     "alex",
                     "alex.segura@gmail.com",
                     LocalDate.of(2004, JANUARY, 5),
-                    "sureboy"
+                    "sureboy",
+                    null
 
             );
 

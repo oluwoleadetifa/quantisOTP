@@ -24,25 +24,28 @@ public class Student {
     private String email;
     private LocalDate dob;
     private String password;
+    private String otp;
     @Transient
     private Integer age;
 
     public Student() {
     }
 
-    public Student(Long id, String name, String email, LocalDate dob, String password) {
+    public Student(Long id, String name, String email, LocalDate dob, String password, String otp) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.dob = dob;
         this.password = password;
+        this.otp = otp;
     }
 
-    public Student(String name, String email, LocalDate dob, String password) {
+    public Student(String name, String email, LocalDate dob, String password, String otp) {
         this.name = name;
         this.email = email;
         this.dob = dob;
         this.password = password;
+        this.otp = otp;
     }
 
     public Long getId() {
@@ -83,6 +86,10 @@ public class Student {
         this.password = hashedPassword;
     }
 
+    public String getOtp(){return otp;}
+
+    public void setOtp(String otp){this.otp = otp;}
+
     @Override
     public String toString() {
         return "Student{" +
@@ -91,6 +98,7 @@ public class Student {
                 ", email='" + email + '\'' +
                 ", dob=" + dob +
                 ", password='" + password + '\'' +
+                ", otp=' " + otp +'\''+
                 ", age=" + age +
                 '}';
     }

@@ -4,20 +4,24 @@ import com.idquantique.quantis.Quantis;
 import com.idquantique.quantis.QuantisException;
 import com.idquantique.quantis.repository.LoginRepository;
 import com.idquantique.quantis.repository.StudentRepository;
+import com.idquantique.quantis.student.OtpResetTask;
 import com.idquantique.quantis.student.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.Timer;
 
 @Service
 public class LoginService {
 
     private final LoginRepository loginRepository;
 
+    private final StudentRepository studentRepository;
+
     @Autowired
-    public LoginService(LoginRepository loginRepository) {this.loginRepository = loginRepository;}
+    public LoginService(LoginRepository loginRepository, StudentRepository studentRepository) {this.loginRepository = loginRepository; this.studentRepository = studentRepository;}
 
 
     public HashMap<String, String> login(String email, String password) throws QuantisException {
@@ -56,4 +60,8 @@ public class LoginService {
         loginRepository.save(student);
     }
 
+    private void startTimerToResetOtp(String email){
+        Timer timer = new Timer();
+        timer.schedule(new OtpResetTask(studentRepository, email), 5 * 60 * 1000);
+    }
 }
