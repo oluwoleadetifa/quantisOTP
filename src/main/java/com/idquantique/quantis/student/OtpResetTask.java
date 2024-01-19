@@ -15,10 +15,10 @@ public class OtpResetTask extends TimerTask {
 
     @Override
     public void run() {
-        Student user = studentRepository.findStudentByEmail(email).orElse(null);
-        if (user != null) {
-            user.setOtp(null);
-            studentRepository.save(user);
+        Student student = studentRepository.findStudentByEmail(email).orElse(null);
+        if (student != null) {
+            student.setOtp(null);
+            studentRepository.save(student);
         }
     }
 }

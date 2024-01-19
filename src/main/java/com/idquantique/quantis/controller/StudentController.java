@@ -75,7 +75,6 @@ public class StudentController {
         // set response body by params
         responseData.setMessage(response.get("message"));
         responseData.setOtp(response.get("otp"));
-        student.setOtp(response.get("otp"));
         responseData.setStatus(String.valueOf(httpStatus));
 
         return new ResponseEntity<>(responseData, httpStatus);
@@ -85,6 +84,11 @@ public class StudentController {
     public void signup(@RequestBody(required = true) Student student){
         loginService.signup(student);
 
+    }
+
+    @PostMapping("/validate-otp")
+    public void validateOtp(@RequestBody Student student) {
+        loginService.validateOtp(student);
     }
 
 

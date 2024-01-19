@@ -81,14 +81,17 @@ public class Student {
         return hashedPassword; }
 
     public void setPassword(String password) {
-
         String hashedPassword = HashTool.hashString(password);
         this.password = hashedPassword;
     }
 
-    public String getOtp(){return otp;}
+    public String getOtp(){
+        String hashedOtp = HashTool.hashString(otp);
+        return hashedOtp;}
 
-    public void setOtp(String otp){this.otp = otp;}
+    public void setOtp(String otp){
+        String hashedOtp = HashTool.hashString(otp);
+        this.otp = hashedOtp;}
 
     @Override
     public String toString() {

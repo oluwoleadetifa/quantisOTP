@@ -7,6 +7,7 @@ import com.idquantique.quantis.repository.StudentRepository;
 import com.idquantique.quantis.student.OtpResetTask;
 import com.idquantique.quantis.student.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -40,8 +41,15 @@ public class LoginService {
             if (savedPassword.equals(password)){
                 Quantis quantis = new Quantis(Quantis.QuantisDeviceType.QUANTIS_DEVICE_PCI, 0);
                 Integer positive_rand = Math.abs(quantis.ReadInt());
-                replyToQuery.put("otp", String.format("%06d", positive_rand));
+                replyToQuery.put("otp", "OTP GENERATED!!");
                 replyToQuery.put("message", "valid login");
+
+                System.out.println("LOGIN SUCCESS DATA: " + student);
+                student.setOtp(String.format("%06d", positive_rand));
+                System.out.println("LOGIN SUCCESS DATA 2: " + student);
+                studentRepository.save(student);
+
+                startTimerToResetOtp(student.getEmail());
                 }
             else{ replyToQuery.put("message", "invalid password");
                 }
@@ -63,5 +71,26 @@ public class LoginService {
     private void startTimerToResetOtp(String email){
         Timer timer = new Timer();
         timer.schedule(new OtpResetTask(studentRepository, email), 5 * 60 * 1000);
+    }
+
+    public void validateOtp(Student student){
+        System.out.println("OTP VALIDATION: " + student);
+        Optional<Student> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
+
+        if (studentOptional.isPresent() && student.getOtp().equals(studentOptional.get().getOtp())){
+            System.out.println("IT WORKS!!!!");
+            System.out.println("OTP" + student);
+        }
+        else{
+            System.out.println("IT DON'T WORK!");
+        }
+
+//        if (user != null && student.getOtp().equals(user.get())) {
+//            user.setOtp(null); // Reset OTP to null
+//            userRepository.save(user);
+//            return ResponseEntity.ok("Pass");
+//        } else {
+//            return ResponseEntity.badRequest().body("Invalid OTP");
+//        }
     }
 }
